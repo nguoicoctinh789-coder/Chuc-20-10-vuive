@@ -1,1 +1,3 @@
-# Chuc-20-10-vuive
+lỗi 
+lm 
+lại
