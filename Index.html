@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20/10 - Khu vườn yêu thương 💜</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;
+ font-family:Arial,sans-serif;color:#fff;
+ background:linear-gradient(145deg,#151a43,#40306f,#242b59);
+ text-align:center;overflow-x:hidden
+}
+#music{
+ position:fixed;top:8px;left:8px;
+ width:calc(100% - 16px);height:36px;
+ z-index:10
+}
+.page{
+ display:none;min-height:100vh;
+ padding:70px 18px 30px;
+ align-items:center;justify-content:center
+}
+.page.active{display:flex}
+.card{
+ width:100%;max-width:440px;
+ padding:28px 20px;
+ background:#ffffff10;
+ border:1px solid #ffffff42;
+ border-radius:28px;
+ box-shadow:0 12px 40px #090b2838
+}
+h1{font-size:29px;line-height:1.4}
+p{font-size:16px;line-height:1.8}
+.eyes{
+ display:flex;justify-content:center;align-items:center;
+ gap:25px;height:70px;margin:10px
+}
+.eye{
+ width:19px;height:29px;background:white;
+ border-radius:50%;position:relative;
+ animation:blink 4s infinite
+}
+.eye:after{
+ content:"";position:absolute;
+ width:8px;height:12px;background:#28204f;
+ border-radius:50%;left:6px;top:7px
+}
+/* Biểu cảm chỉ thay đổi bằng mắt */
+.happy .eye{
+ height:12px;background:transparent;
+ border-top:4px solid white;border-radius:50%
+}
+.happy .eye:after{display:none}
+.surprised .eye{width:25px;height:36px}
+.sleepy .eye{
+ height:5px;border-radius:8px
+}
+.sleepy .eye:after{display:none}
+@keyframes blink{
+ 0%,44%,48%,100%{transform:scaleY(1)}
+ 46%,47%{transform:scaleY(.12)}
+}
+button{
+ border:1px solid #ffffff55;
+ border-radius:28px;padding:13px 18px;
+ margin:7px;background:#8871d5;color:white;
+ font-size:15px;font-weight:bold
+}
+button:active{transform:scale(.96)}
+.nav{margin-top:18px}
+.note{
+ background:#ffffff12;border-radius:18px;
+ padding:16px;line-height:1.8
+}
+#message{min-height:90px}
+#musicStatus{font-size:13px;color:#e1d9ff}
+.garden{
+ height:240px;position:relative;overflow:hidden;
+ border-radius:20px;margin:20px 0;
+ background:linear-gradient(#242954,#4b427c 70%,#284d52)
+}
+.ground{
+ position:absolute;bottom:0;width:100%;height:42px;
+ background:#315a50
+}
+.tulip{
+ position:absolute;bottom:25px;
+ font-size:36px;
+ transform-origin:bottom center;
+ animation:sway 2s ease-in-out infinite alternate
+}
+.t1{left:5%;animation-delay:.1s}
+.t2{left:20%;animation-delay:.5s}
+.t3{left:35%;animation-delay:.2s}
+.t4{left:50%;animation-delay:.8s}
+.t5{left:65%;animation-delay:.3s}
+.t6{left:80%;animation-delay:.6s}
+.t7{left:90%;animation-delay:.4s}
+@keyframes sway{
+ from{transform:rotate(-9deg) translateY(0)}
+ to{transform:rotate(9deg) translateY(-6px)}
+}
+.petal{
+ position:absolute;top:-30px;
+ animation:fall 7s linear infinite;
+ pointer-events:none
+}
+@keyframes fall{
+ to{transform:translateY(110vh) rotate(300deg)}
+}
+</style>
+</head>
+<body>
+
+<!-- NHẠC DÙNG CHUNG CHO CẢ 4 MÀN HÌNH -->
+<audio id="music" loop preload="auto">
+ <source src="nhac.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MÀN HÌNH 1 -->
+<section class="page active" id="p1">
+ <div class="card">
+  <div class="eyes"><i class="eye"></i><i class="eye"></i></div>
+  <h1>Chào mừng đến với 💜</h1>
+  <h1>Khu vườn 20/10</h1>
+  <p>Một món quà nhỏ với thật nhiều yêu thương đang chờ bạn.</p>
+  <p>Hãy cùng mình bắt đầu hành trình nhé!</p>
+  <button onclick="startJourney()">Bắt đầu ✨</button>
+  <p id="musicStatus">🎵 Bấm bắt đầu để thử phát nhạc</p>
+ </div>
+</section>
+
+<!-- MÀN HÌNH 2 -->
+<section class="page" id="p2">
+ <div class="card">
+  <div class="eyes happy"><i class="eye"></i><i class="eye"></i></div>
+  <h1>Giai điệu yêu thương 🎵</h1>
+  <p>Hãy để giai điệu dịu dàng này làm ngày hôm nay thêm vui vẻ.</p>
+  <div class="note">
+   Chúc bạn luôn có những ngày bình yên,
+   nhiều tiếng cười và những điều tốt đẹp. 💙
+  </div>
+  <button onclick="toggleMusic()">▶ / ⏸ Bật hoặc tạm dừng nhạc</button>
+  <div class="nav">
+   <button onclick="showPage(1)">← Quay lại</button>
+   <button onclick="showPage(3)">Tiếp theo →</button>
+  </div>
+ </div>
+</section>
+
+<!-- MÀN HÌNH 3 -->
+<section class="page" id="p3">
+ <div class="card">
+  <div class="eyes surprised"><i class="eye"></i><i class="eye"></i></div>
+  <h1>Một chút bất ngờ 💌</h1>
+  <p>Bấm nút để nhận một lời nhắn nhé!</p>
+  <div class="note" id="message">
+   Có một điều dễ thương đang chờ bạn...
+  </div>
+  <button onclick="nextMessage()">Mở lời nhắn 💜</button>
+  <div class="nav">
+   <button onclick="showPage(2)">← Quay lại</button>
+   <button onclick="showPage(4)">Đến khu vườn →</button>
+  </div>
+ </div>
+</section>
+
+<!-- MÀN HÌNH 4: KẾT THÚC -->
+<section class="page" id="p4">
+ <div class="card">
+  <div class="eyes sleepy"><i class="eye"></i><i class="eye"></i></div>
+  <h1>Khu vườn tulip 🌷</h1>
+  <p>Đây là món quà cuối cùng dành tặng bạn.</p>
+  <div class="garden">
+   <span class="tulip t1">🌷</span>
+   <span class="tulip t2">🌷</span>
+   <span class="tulip t3">🌷</span>
+   <span class="tulip t4">🌷</span>
+   <span class="tulip t5">🌷</span>
+   <span class="tulip t6">🌷</span>
+   <span class="tulip t7">🌷</span>
+   <div class="ground"></div>
+  </div>
+  <div class="note">
+   <h2>Chúc mừng ngày 20/10 💜</h2>
+   Chúc bạn luôn vui vẻ, bình an, tự tin
+   và được yêu thương mỗi ngày.
+   <br><br>
+   Mong mọi ước mơ đẹp đẽ sẽ dần thành hiện thực.
+   Hãy luôn trân trọng bản thân và tỏa sáng
+   theo cách riêng của mình nhé!
+   <br><br>
+   <strong>Chúc bạn có một ngày 20/10 thật đáng nhớ! 🤍</strong>
+  </div>
+  <div class="nav">
+   <button onclick="showPage(3)">← Đọc lại lời nhắn</button>
+   <button onclick="showPage(1)">Xem lại từ đầu ↻</button>
+  </div>
+ </div>
+</section>
+
+<script>
+const music=document.getElementById("music");
+
+function startJourney(){
+ music.play().then(()=>{
+  document.getElementById("musicStatus").textContent="🎵 Nhạc đang phát";
+ }).catch(()=>{
+  document.getElementById("musicStatus").textContent=
+   "Hãy tải nhạc MP3 lên GitHub rồi thử lại nhé.";
+ });
+ showPage(2);
+}
+
+function toggleMusic(){
+ if(music.paused){
+  music.play().catch(()=>alert("Hãy kiểm tra file nhac.mp3 nhé."));
+ }else{
+  music.pause();
+ }
+}
+
+function showPage(n){
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.remove("active");
+ });
+ document.getElementById("p"+n).classList.add("active");
+ window.scrollTo(0,0);
+}
+
+const messages=[
+ "Chúc bạn luôn có thật nhiều niềm vui! 💜",
+ "Mong mọi điều tốt đẹp sẽ đến với bạn! 🌷",
+ "Hãy luôn tin tưởng và yêu quý chính mình nhé! 🤍",
+ "Bạn xứng đáng có những ngày thật tuyệt vời! ✨",
+ "Chúc bạn 20/10 ngập tràn yêu thương! 💙"
+];
+let messageIndex=0;
+
+function nextMessage(){
+ document.getElementById("message").textContent=
+ messages[messageIndex%messages.length];
+ messageIndex++;
+}
+
+/* Hoa nhỏ rơi nhẹ ở nền */
+for(let i=0;i<12;i++){
+ const petal=document.createElement("span");
+ petal.className="petal";
+ petal.textContent="✦";
+ petal.style.left=Math.random()*100+"%";
+ petal.style.color="#e4d5ff";
+ petal.style.animationDelay=Math.random()*7+"s";
+ petal.style.animationDuration=(5+Math.random()*5)+"s";
+ document.body.appendChild(petal); }
+</script>
+</body>
+</html>
